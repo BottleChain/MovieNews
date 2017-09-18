@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">豆豆影讯</string>
+    <string name="key">ad83894ead3e1348a6d86dc37abfd695</string>
+    <string name="accessToken">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZDgzODk0ZWFkM2UxMzQ4YTZkODZkYzM3YWJmZDY5NSIsInN1YiI6IjU5YTUwNDljOTI1MTQxMmY1ODAwMmE1ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gw0ORlHwYPisdHgFhL6VeWcRlXSXW55V0oQB56P18Q4</string>
+    <string name="notification">notification</string>
+    <string name="hot_star">热门演员</string>
+    <string name="movie_news">豆豆影讯</string>
+    <string name="search">搜索</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="loading">加载中....</string>
+    <string name="overview">概述</string>
+    <string name="abuout">关于</string>
+    <string name="movie">电影</string>
+    <string name="TV">电视剧</string>
+    <string name="seting">设置</string>
+    <string name="movie_logo">logo</string>
+    <string name="synopsis">影片简介:</string>
+    <string name="budget">投入:</string>
+    <string name="genre">类型:</string>
+    <string name="release_date">上映日期:</string>
+    <string name="run_time">影片时长:</string>
+    <string name="certification">Certification</string>
+    <string name="similar">同类影片:</string>
+    <string name="revenue">票房:</string>
+    <string name="language">zh-CN</string>
+    <string name="language_set">语言设置</string>
+    <string name="auto">跟随系统语言</string>
+    <string name="chinese">简体中文</string>
+    <string name="english">英语</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+
+    <string-array name="play_type">
+        <item>评分最高</item>
+        <item>时下流行</item>
+        <item>正在上映</item>
+        <item>即将上映</item>
+    </string-array>
+
+    <string-array name="search_type">
+        <item>电影</item>
+        <item>人物</item>
+    </string-array>
+
+    <string-array name="movie_info_tab">
+        <item>概述</item>
+        <item>演员</item>
+        <item>评论</item>
+    </string-array>
+</resources>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+       <LinearLayout
+           android:layout_marginRight="10dp"
+           android:layout_marginLeft="10dp"
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <TextView
+               android:text="@string/synopsis"
+               style="@style/text_title_style"/>
+
+           <TextView
+               android:id="@+id/tv_synopsis"
+               style="@style/text_body_style"/>
+
+           <TextView
+               android:text="@string/budget"
+               style="@style/text_title_style"/>
+
+           <TextView
+               android:id="@+id/tv_year"
+               style="@style/text_body_style"/>
+
+           <TextView
+               android:text="@string/revenue"
+               style="@style/text_title_style"/>
+
+           <TextView
+               android:id="@+id/tv_revenue"
+               style="@style/text_body_style"/>
+
+           <TextView
+               android:text="@string/genre"
+               style="@style/text_title_style"/>
+
+           <TextView
+               android:id="@+id/tv_genre"
+               style="@style/text_body_style"/>
+
+           <TextView
+               android:text="@string/release_date"
+               style="@style/text_title_style"/>
+
+           <TextView
+               android:id="@+id/tv_release_date"
+               style="@style/text_body_style"/>
+
+           <TextView
+               android:text="@string/run_time"
+               style="@style/text_title_style"/>
+
+           <TextView
+               android:id="@+id/tv_run_time"
+               style="@style/text_body_style"/>
+
+           <TextView
+               android:text="@string/certification"
+               style="@style/text_title_style"/>
+
+           <TextView
+               android:id="@+id/tv_certification"
+               style="@style/text_body_style"/>
+
+           <TextView
+               android:text="@string/similar"
+               style="@style/text_title_style"/>
+
+           <android.support.v7.widget.RecyclerView
+               android:id="@+id/recyclerView"
+               android:layout_marginTop="14dp"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+
+           </android.support.v7.widget.RecyclerView>
+
+       </LinearLayout>
+
+
+
+
+</android.support.v4.widget.NestedScrollView>
