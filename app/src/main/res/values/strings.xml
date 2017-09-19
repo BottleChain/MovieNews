@@ -31,6 +31,24 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+    <string name="action">Action</string>
+    <string name="adventrue">Adventure</string>
+    <string name="animation">Animation</string>
+    <string name="comedy">Comedy</string>
+    <string name="crime">Crime</string>
+    <string name="documentary">Documentary</string>
+    <string name="drama">Drama</string>
+    <string name="family">Family</string>
+    <string name="fantasy">Fantasy</string>
+    <string name="history">History</string>
+    <string name="horror">Horror</string>
+    <string name="music">Music</string>
+    <string name="mystery">Mystery</string>
+    <string name="romance">Romance</string>
+    <string name="thriller">Thriller</string>
+    <string name="war">War</string>
+    <string name="western">Western</string>
+    <string name="clear">Clear</string>
 
     <string-array name="play_type">
         <item>TopRated</item>

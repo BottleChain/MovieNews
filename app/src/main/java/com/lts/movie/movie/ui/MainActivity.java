@@ -1,5 +1,6 @@
 package com.lts.movie.movie.ui;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import com.lts.movie.constant.MovieListType;
 import com.lts.movie.movie.presenter.MoviePresenter;
 import com.lts.movie.movie.presenter.MoviePresenterImpl;
 import com.lts.movie.movie.view.MovieView;
+import com.lts.movie.search.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,11 @@ public class MainActivity extends BaseActivity<MoviePresenter> implements MovieV
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_search) {
+            startActivity(new Intent(this, SearchActivity.class));
 
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

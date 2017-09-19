@@ -30,7 +30,7 @@ android {
 
         debug{
             applicationIdSuffix ".debug"
-            signingConfig signingConfigs.config
+            //signingConfig signingConfigs.config
         }
     }
 

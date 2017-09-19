@@ -22,7 +22,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -66,6 +66,12 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/movie_news"
             android:screenOrientation="nosensor">
+
+        </activity>
+
+        <activity
+            android:name=".search.SearchActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible">
 
         </activity>
     </application>
