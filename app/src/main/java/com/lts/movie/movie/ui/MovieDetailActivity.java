@@ -1,11 +1,13 @@
 package com.lts.movie.movie.ui;
 
+import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -100,6 +102,15 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                     mFab.show();
                 }
 
+            }
+        });
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MovieDetailActivity.this, MoviePlayListActivity.class);
+                intent.putExtra(Constant.movie_id, mMovieId);
+                startActivity(intent);
             }
         });
     }

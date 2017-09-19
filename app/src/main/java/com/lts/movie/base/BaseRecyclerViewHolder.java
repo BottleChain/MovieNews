@@ -20,6 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.youtube.player.YouTubeThumbnailView;
+
 /**
  * ClassName: BaseRecyclerViewHolder<p>
  * Author:oubowu<p>
@@ -65,6 +67,10 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView getImageView(int viewId) {
         return (ImageView) getView(viewId);
+    }
+
+    public YouTubeThumbnailView getYouTubeThumbnailView(int viewId) {
+        return (YouTubeThumbnailView) getView(viewId);
     }
 
     public ImageButton getImageButton(int viewId) {

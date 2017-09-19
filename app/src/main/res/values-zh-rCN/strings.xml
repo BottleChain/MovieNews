@@ -30,6 +30,7 @@
     <string name="english">英语</string>
     <string name="cancel">取消</string>
     <string name="ok">确定</string>
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
 
     <string-array name="play_type">
         <item>评分最高</item>

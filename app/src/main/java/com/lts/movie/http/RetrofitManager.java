@@ -7,6 +7,7 @@ import com.lts.movie.bean.Cast;
 import com.lts.movie.bean.MovieDetail;
 import com.lts.movie.bean.NowPlayMovie;
 import com.lts.movie.bean.Reviews;
+import com.lts.movie.bean.Video;
 import com.lts.movie.constant.HostType;
 import com.lts.movie.constant.MovieListType;
 import com.lts.movie.util.NetUtil;
@@ -201,6 +202,10 @@ public class RetrofitManager {
 
     public Observable<Reviews> getReviews(Integer movieId, String api_key, String lauguage, Integer page) {
         return mApi.getReviews(movieId, api_key, lauguage, page);
+    }
+
+    public Observable<Video> getMovieVideo(int movie_id, String api_key, String language) {
+        return mApi.getMovieVideoList(movie_id, api_key, language);
     }
 
 }

@@ -4,6 +4,7 @@ import com.lts.movie.bean.Cast;
 import com.lts.movie.bean.MovieDetail;
 import com.lts.movie.bean.NowPlayMovie;
 import com.lts.movie.bean.Reviews;
+import com.lts.movie.bean.Video;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -57,4 +58,9 @@ public interface Api {
                                    @Query("api_key") String api_key,
                                    @Query("language") String language,
                                    @Query("page") Integer page);
+
+    @GET("movie/{movie_id}/videos")
+    Observable<Video> getMovieVideoList(@Path("movie_id") int id,
+                                        @Query("api_key") String api_key,
+                                        @Query("language") String language);
 }

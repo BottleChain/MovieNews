@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'movieNews'
+            keyPassword '123456'
+            storeFile file('C:/Users/tsliu/key_store/movie news/movie_news.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
     defaultConfig {
@@ -14,16 +22,44 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+
+        debug{
+            applicationIdSuffix ".debug"
+            signingConfig signingConfigs.config
         }
     }
+
+    //修改生成的apk名字
+    applicationVariants.all { variant ->
+
+        if (variant.buildType.name.equals('release') || variant.buildType.name.equals('debug')) {
+            variant.outputs.each { output ->
+                def appName = 'TSL'
+                def oldFile = output.outputFile
+                def buildName = ''
+
+                variant.productFlavors.each { product ->
+                    buildName = product.name
+                }
+
+                def releaseApkName = appName + '-' + defaultConfig.versionName + "-" + variant.buildType.name + "-" + buildName + '.apk'
+                output.outputFile = new File(oldFile.parent, releaseApkName)
+            }
+        }
+    }
+
 }
 
 dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile files('libs/YouTubeAndroidPlayerApi.jar')
     //支持库
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'

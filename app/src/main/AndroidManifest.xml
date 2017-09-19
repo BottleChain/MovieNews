@@ -37,16 +37,35 @@
             android:theme="@style/AppTheme.MovieAppThem">
         </activity>
 
-        <activity android:name=".tv.TVActivity"
+        <activity
+            android:name=".tv.TVActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/movie_news">
+            android:label="@string/movie_news"
+            android:windowSoftInputMode="adjustPan|stateHidden">
 
         </activity>
 
-        <activity android:name=".setting.SettingActivity"
+        <activity
+            android:name=".setting.SettingActivity"
             android:label="@string/movie_news"
             android:windowSoftInputMode="adjustPan|stateHidden">
+
+        </activity>
+
+        <activity
+            android:name=".movie.ui.MoviePlayListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/movie_news"
+            android:screenOrientation="nosensor"
+            >
+
+        </activity>
+
+        <activity
+            android:name=".movie.ui.VideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/movie_news"
+            android:screenOrientation="nosensor">
 
         </activity>
     </application>
