@@ -63,4 +63,8 @@ public interface Api {
     Observable<Video> getMovieVideoList(@Path("movie_id") int id,
                                         @Query("api_key") String api_key,
                                         @Query("language") String language);
+    @GET("search/movie")
+    Observable<NowPlayMovie> queryMovie(@Query("api_key") String api_key,
+                                        @Query("language") String language,
+                                        @Query("query") String query);
 }

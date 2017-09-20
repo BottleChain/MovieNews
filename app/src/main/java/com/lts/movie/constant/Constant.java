@@ -1,5 +1,8 @@
 package com.lts.movie.constant;
 
+import com.lts.movie.App;
+import com.lts.movie.R;
+
 /**
  * Created by lts on 2017/8/28.
  * Fuction: 一些常量类
@@ -29,6 +32,7 @@ public final class Constant {
     public static final String logUrl = image_base_url + logo_size;
     public static final String backgoundUrl = image_base_url + backdrop_size;
     public static final String movie_id = "movie_id";
+    public static final String LANGUGE = App.getContext().getResources().getString(R.string.language);
 
 
     /**

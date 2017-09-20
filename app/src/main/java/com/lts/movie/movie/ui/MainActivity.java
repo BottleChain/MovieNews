@@ -14,7 +14,7 @@ import com.lts.movie.constant.MovieListType;
 import com.lts.movie.movie.presenter.MoviePresenter;
 import com.lts.movie.movie.presenter.MoviePresenterImpl;
 import com.lts.movie.movie.view.MovieView;
-import com.lts.movie.search.SearchActivity;
+import com.lts.movie.search.ui.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;

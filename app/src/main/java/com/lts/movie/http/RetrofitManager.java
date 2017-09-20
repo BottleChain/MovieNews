@@ -208,4 +208,8 @@ public class RetrofitManager {
         return mApi.getMovieVideoList(movie_id, api_key, language);
     }
 
+    public Observable<NowPlayMovie> queryMovie(String api_key, String language, String query) {
+        return mApi.queryMovie(api_key, language, query);
+    }
+
 }
