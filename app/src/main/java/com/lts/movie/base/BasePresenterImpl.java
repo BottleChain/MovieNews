@@ -6,7 +6,7 @@ import rx.Subscription;
 
 /**
  * Created by lts on 2017/8/28.
- * Fuction: P层的基类,
+ * Fuction: 代理实现类的基类,建议所有代理实现类都继承此类;限定了两个泛型{@see T ,V:后台返回数据的实体类},
  * Update:
  */
 

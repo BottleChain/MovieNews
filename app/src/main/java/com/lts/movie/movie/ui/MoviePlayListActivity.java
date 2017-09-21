@@ -1,6 +1,8 @@
 package com.lts.movie.movie.ui;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -125,7 +127,13 @@ public class MoviePlayListActivity extends BaseActivity<MoviePlayListPresenter> 
                 Intent intent = new Intent(MoviePlayListActivity.this, VideoActivity.class);
                 intent.putExtra(Constant.VIDEO_NAME, resultsBean.getName());
                 intent.putExtra(Constant.VIDEO_KEY, resultsBean.getKey());
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MoviePlayListActivity.this, view.findViewById(R.id.thumbnail), "thumbnail");
+
+                    startActivity(intent, options.toBundle());
+                } else {
+                    startActivity(intent);
+                }
             }
         });
 

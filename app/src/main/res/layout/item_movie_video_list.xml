@@ -9,6 +9,7 @@
     <com.google.android.youtube.player.YouTubeThumbnailView
         android:id="@+id/thumbnail"
         android:layout_width="168dp"
+        android:transitionName="thumbnail"
         android:layout_height="match_parent"
         android:src="@drawable/no_thumbnail"
         android:adjustViewBounds="true"

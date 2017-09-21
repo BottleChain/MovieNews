@@ -127,7 +127,7 @@ public class MovieListFragment extends BaseFragment<MovieListPresenter> implemen
 
     private void initAdapter(List<NowPlayMovie.ResultsBean> nowPlayMovie) {
 
-        mAdapter = new BaseRecyclerAdapter<NowPlayMovie.ResultsBean>(getActivity(),nowPlayMovie) {
+        mAdapter = new BaseRecyclerAdapter<NowPlayMovie.ResultsBean>(mActivity,nowPlayMovie) {
             @Override
             public int getItemLayoutId(int viewType) {
                 return R.layout.item_movie_list;
