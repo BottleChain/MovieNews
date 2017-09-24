@@ -1,5 +1,8 @@
 package com.lts.movie.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -8,7 +11,7 @@ import java.util.List;
  * Update:
  */
 
-public class Cast {
+public class Cast implements Parcelable{
 
 
     /**
@@ -34,7 +37,7 @@ public class Cast {
      */
 
     private String birthday;
-    private Object deathday;
+
     private int id;
     private String name;
     private int gender;
@@ -44,7 +47,7 @@ public class Cast {
     private String profile_path;
     private boolean adult;
     private String imdb_id;
-    private Object homepage;
+
     private List<String> also_known_as;
 
     public String getBirthday() {
@@ -55,13 +58,7 @@ public class Cast {
         this.birthday = birthday;
     }
 
-    public Object getDeathday() {
-        return deathday;
-    }
 
-    public void setDeathday(Object deathday) {
-        this.deathday = deathday;
-    }
 
     public int getId() {
         return id;
@@ -135,14 +132,6 @@ public class Cast {
         this.imdb_id = imdb_id;
     }
 
-    public Object getHomepage() {
-        return homepage;
-    }
-
-    public void setHomepage(Object homepage) {
-        this.homepage = homepage;
-    }
-
     public List<String> getAlso_known_as() {
         return also_known_as;
     }
@@ -150,4 +139,57 @@ public class Cast {
     public void setAlso_known_as(List<String> also_known_as) {
         this.also_known_as = also_known_as;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.birthday);
+
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeInt(this.gender);
+        dest.writeString(this.biography);
+        dest.writeDouble(this.popularity);
+        dest.writeString(this.place_of_birth);
+        dest.writeString(this.profile_path);
+        dest.writeByte(this.adult ? (byte) 1 : (byte) 0);
+        dest.writeString(this.imdb_id);
+
+        dest.writeStringList(this.also_known_as);
+    }
+
+    public Cast() {
+    }
+
+    protected Cast(Parcel in) {
+        this.birthday = in.readString();
+
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.gender = in.readInt();
+        this.biography = in.readString();
+        this.popularity = in.readDouble();
+        this.place_of_birth = in.readString();
+        this.profile_path = in.readString();
+        this.adult = in.readByte() != 0;
+        this.imdb_id = in.readString();
+
+        this.also_known_as = in.createStringArrayList();
+    }
+
+    public static final Creator<Cast> CREATOR = new Creator<Cast>() {
+        @Override
+        public Cast createFromParcel(Parcel source) {
+            return new Cast(source);
+        }
+
+        @Override
+        public Cast[] newArray(int size) {
+            return new Cast[size];
+        }
+    };
 }

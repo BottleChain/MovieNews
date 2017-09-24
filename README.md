@@ -14,14 +14,16 @@
 #使用到的第三方库#
 
 Retrofit [https://github.com/square/retrofit](https://github.com/square/retrofit)
+
 Picasso [https://github.com/square/picasso](https://github.com/square/picasso)
+
 一个非常方便的日志打印工具  [https://github.com/ZhaoKaiQiang/KLog](https://github.com/ZhaoKaiQiang/KLog)
 
 感谢 [https://gank.io/post/560e15be2dca930e00da1083](https://gank.io/post/560e15be2dca930e00da1083)
 
 MIT License
 
-Copyright (c) [2017] [TangBei Liu]
+Copyright (c) 2017 TangBei Liu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

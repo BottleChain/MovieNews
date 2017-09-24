@@ -27,6 +27,8 @@
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
+            android:showDividers="middle"
+            android:divider="@drawable/vertical_lines"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
@@ -38,6 +40,17 @@
                 android:layout_marginLeft="16dp"
                 android:gravity="center_vertical"
                 android:text="@string/language_set"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+
+
+            <TextView
+                android:id="@+id/about"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:text="@string/abuout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
 
