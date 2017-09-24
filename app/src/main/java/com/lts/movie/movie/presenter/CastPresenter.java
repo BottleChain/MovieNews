@@ -9,4 +9,6 @@ import com.lts.movie.base.BasePresenter;
  */
 
 public interface CastPresenter extends BasePresenter {
+
+    void reFreshData();
 }

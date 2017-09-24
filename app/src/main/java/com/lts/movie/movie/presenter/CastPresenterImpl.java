@@ -1,7 +1,7 @@
 package com.lts.movie.movie.presenter;
 
 import com.lts.movie.base.BasePresenterImpl;
-import com.lts.movie.bean.Cast;
+import com.lts.movie.bean.CastList;
 import com.lts.movie.constant.Constant;
 import com.lts.movie.constant.DataLoadType;
 import com.lts.movie.movie.moudel.CastMoudel;
@@ -14,15 +14,17 @@ import com.lts.movie.movie.view.CastView;
  * Update:
  */
 
-public class CastPresenterImpl extends BasePresenterImpl<CastView, Cast> implements CastPresenter {
+public class CastPresenterImpl extends BasePresenterImpl<CastView, CastList> implements CastPresenter {
 
     private CastView mView;
-    private CastMoudel<Cast> mMoudel;
+    private CastMoudel<CastList> mMoudel;
+    private int mMovieId;
 
     public CastPresenterImpl(CastView view, int movieId) {
         super(view);
         this.mMoudel = new CastMoudelImpl();
         this.mView = view;
+        this.mMovieId = movieId;
         mSubscription = mMoudel.requestionCastForMovie(this, Constant.api_key, movieId);
     }
 
@@ -34,7 +36,12 @@ public class CastPresenterImpl extends BasePresenterImpl<CastView, Cast> impleme
     }
 
     @Override
-    public void requestSuccess(Cast data) {
+    public void requestSuccess(CastList data) {
         mView.showCast(data == null ? null : data.getCast(), null, DataLoadType.REQUEST_DATA_SUCCESS);
+    }
+
+    @Override
+    public void reFreshData() {
+        mSubscription = mMoudel.requestionCastForMovie(this, Constant.api_key, mMovieId);
     }
 }

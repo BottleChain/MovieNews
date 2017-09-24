@@ -20,6 +20,7 @@ public class ReviewPresenterImpl extends BasePresenterImpl<ReviewView,Reviews> i
     private ReviewMoudel<Reviews> mMoudel;
     private int mStartPage;
     private int mMovieId;
+    private boolean mIsRefresh = true;
 
 
     public ReviewPresenterImpl(ReviewView view,int movieId,String language) {
@@ -34,6 +35,8 @@ public class ReviewPresenterImpl extends BasePresenterImpl<ReviewView,Reviews> i
     @Override
     public void requestError(String msg) {
         super.requestError(msg);
+
+        mView.showReviews(null,msg,mIsRefresh? DataLoadType.REQUEST_DATA_FAIL:DataLoadType.REQUST_MORE_FAIL);
     }
 
     @Override
@@ -42,6 +45,19 @@ public class ReviewPresenterImpl extends BasePresenterImpl<ReviewView,Reviews> i
             mStartPage ++;
         }
 
-        mView.showReviews(data == null? null:data.getResults(),null, DataLoadType.REQUEST_DATA_SUCCESS);
+        mView.showReviews(data == null? null:data.getResults(),null,mIsRefresh ? DataLoadType.REQUEST_DATA_SUCCESS:DataLoadType.REQUST_MORE_DATA_SUCCESS);
+    }
+
+    @Override
+    public void reFreshData() {
+        mStartPage = 1;
+        mIsRefresh = true;
+        mSubscription = mMoudel.requestReview(this, mMovieId, Constant.api_key, Constant.LANGUGE, mStartPage);
+    }
+
+    @Override
+    public void loadMoreData() {
+        mIsRefresh = false;
+        mSubscription = mMoudel.requestReview(this, mMovieId, Constant.api_key, Constant.LANGUGE, mStartPage);
     }
 }

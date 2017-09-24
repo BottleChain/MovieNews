@@ -1,21 +1,32 @@
 package com.lts.movie.movie.ui;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lts.movie.R;
 import com.lts.movie.base.BaseFragment;
+import com.lts.movie.base.BaseRecyclerAdapter;
+import com.lts.movie.base.BaseRecyclerViewHolder;
 import com.lts.movie.bean.MovieDetail;
+import com.lts.movie.bean.NowPlayMovie;
+import com.lts.movie.callback.OnItemClickAdapter;
 import com.lts.movie.constant.Constant;
+import com.lts.movie.constant.Genres;
 import com.lts.movie.movie.presenter.MovieDeatilPresenterImpl;
 import com.lts.movie.movie.presenter.MovieDetailPresenter;
 import com.lts.movie.movie.view.MovieDeatilView;
+import com.lts.movie.widget.ThreePointLoadingView;
+import com.squareup.picasso.Picasso;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+import java.util.List;
 
 /**
  * Created by lts on 2017/9/7.
@@ -25,23 +36,29 @@ import butterknife.InjectView;
 
 public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> implements MovieDeatilView {
 
-    @InjectView(R.id.tv_synopsis)
+
     TextView mTvSynopsis;
-    @InjectView(R.id.tv_year)
+
     TextView mTvYear;
-    @InjectView(R.id.tv_genre)
+
     TextView mTvGenre;
-    @InjectView(R.id.tv_release_date)
+
     TextView mTvReleaseDate;
-    @InjectView(R.id.tv_run_time)
+
     TextView mTvRunTime;
-    @InjectView(R.id.tv_certification)
-    TextView mTvCertification;
-    @InjectView(R.id.recyclerView)
+
+
     RecyclerView mRecyclerView;
-    @InjectView(R.id.tv_revenue)
+
     TextView mTvRevenue;
+
+    ThreePointLoadingView mPointLoadingView;
+
+    LinearLayout mLinearLayout;
     private int mMovieId;
+
+    private BaseRecyclerAdapter<NowPlayMovie.ResultsBean> mAdapter;
+
 
     public static MovieOverViewFragment newIntences(int movieId) {
         MovieOverViewFragment fragment = new MovieOverViewFragment();
@@ -61,12 +78,13 @@ public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> im
 
     @Override
     public void showProgress() {
-
+       mPointLoadingView.play();
     }
 
     @Override
     public void hideProgress() {
-
+        mPointLoadingView.stop();
+        mLinearLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -76,8 +94,16 @@ public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> im
 
     @Override
     public void initView(View rootView) {
-        ButterKnife.inject(this, rootView);
-        mPresenter = new MovieDeatilPresenterImpl(this, mMovieId,getResources().getString(R.string.language));
+        mPointLoadingView = (ThreePointLoadingView) rootView.findViewById(R.id.tpl_view);
+        mLinearLayout = (LinearLayout) rootView.findViewById(R.id.root);
+        mTvSynopsis = (TextView) rootView.findViewById(R.id.tv_synopsis);
+        mTvYear = (TextView) rootView.findViewById(R.id.tv_year);
+        mTvRunTime = (TextView) rootView.findViewById(R.id.tv_run_time);
+        mTvGenre = (TextView) rootView.findViewById(R.id.tv_genre);
+        mTvReleaseDate = (TextView) rootView.findViewById(R.id.tv_release_date);
+        mTvRevenue = (TextView) rootView.findViewById(R.id.tv_revenue);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        mPresenter = new MovieDeatilPresenterImpl(this, mMovieId);
     }
 
     @Override
@@ -88,14 +114,49 @@ public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> im
         mTvGenre.setText(movieDetail.getGenresFormat());
         mTvReleaseDate.setText(movieDetail.getRelease_date());
         mTvRevenue.setText(movieDetail.getRevenues());
-
+        showSimilar(movieDetail.getSimilar().getResults());
     }
 
+    private void showSimilar(List<NowPlayMovie.ResultsBean> results) {
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
+        initAdapter(results);
+    }
+
+    private void initAdapter( List<NowPlayMovie.ResultsBean> results) {
+        mAdapter = new BaseRecyclerAdapter<NowPlayMovie.ResultsBean>(mActivity,results) {
+            @Override
+            public int getItemLayoutId(int viewType) {
+                return R.layout.item_similar_layout;
+            }
+
+            @Override
+            public void bindData(BaseRecyclerViewHolder holder, int position, NowPlayMovie.ResultsBean item) {
+                Picasso.with(mActivity).load(Constant.logUrl + item.getPoster_path()).into(holder.getImageView(R.id.movie_logo));
+                holder.getTextView(R.id.movie_name).setText(item.getTitle());
+                holder.getTextView(R.id.movie_type).setText(Genres.getName(item.getGenre_ids()));
+            }
+        };
+
+        mAdapter.setOnItemClickListener(new OnItemClickAdapter() {
+            @Override
+            public void onItemClick(View view, int position) {
+                NowPlayMovie.ResultsBean resultsBean = mAdapter.getData().get(position);
+                Intent intent = new Intent(mActivity, MovieDetailActivity.class);
+                intent.putExtra(Constant.movie_id, resultsBean.getId());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.movie_logo), "logo");
+
+                    mActivity.startActivity(intent, options.toBundle());
+                } else {
+                    startActivity(intent);
+                }
+            }
+        });
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 }

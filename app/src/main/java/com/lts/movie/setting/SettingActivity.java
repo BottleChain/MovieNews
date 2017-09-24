@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
+import android.view.View;
 
 import com.lts.movie.R;
 import com.lts.movie.base.BaseActivity;
@@ -13,9 +14,6 @@ import com.lts.movie.movie.ui.MainActivity;
 import com.lts.movie.util.SpUtils;
 
 import java.util.Locale;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by lts on 2017/9/4.
@@ -48,13 +46,15 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        ButterKnife.inject(this);
         mMenuDefaultCheckedItem = R.id.action_setting;
-
+        findViewById(R.id.setLanguage).setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        onViewClicked();
+    }
 
-    @OnClick(R.id.setLanguage)
     public void onViewClicked() {
         String [] choice = {getResources().getString(R.string.auto),getResources().getString(R.string.chinese),getResources().getString(R.string.english)};
 

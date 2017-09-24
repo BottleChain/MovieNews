@@ -1,7 +1,7 @@
-package com.lts.movie.movie.moudel;
+package com.lts.movie.castdetail.moudel;
 
 import com.lts.movie.base.BaseSubscriber;
-import com.lts.movie.bean.CastList;
+import com.lts.movie.bean.Cast;
 import com.lts.movie.callback.RequestCallback;
 import com.lts.movie.constant.HostType;
 import com.lts.movie.http.RetrofitManager;
@@ -11,21 +11,19 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by lts on 2017/9/16.
+ * Created by lts on 2017/9/23.
  * Fuction:
  * Update:
  */
 
-public class CastMoudelImpl implements CastMoudel<CastList> {
-
-
+public class CastDetailMoudelImpl implements CastDeatilMoudel<Cast> {
     @Override
-    public Subscription requestionCastForMovie(RequestCallback<CastList> callback, String api_key, Integer movieId) {
+    public Subscription requestCastDetail(RequestCallback<Cast> callback, int person_id, String api_key, String language) {
         return RetrofitManager
                 .getInstance(HostType.MOVIE_HOST)
-                .getCastForMovie(movieId, api_key)
+                .getCastDetail(person_id, api_key, language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<CastList>(callback));
+                .subscribe(new BaseSubscriber<>(callback));
     }
 }

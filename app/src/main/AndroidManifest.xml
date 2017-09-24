@@ -74,6 +74,14 @@
             android:windowSoftInputMode="adjustResize|stateVisible">
 
         </activity>
+
+        <activity
+            android:name=".castdetail.ui.CastDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.MovieAppThem">
+
+        </activity>
     </application>
 
 </manifest>

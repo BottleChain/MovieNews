@@ -6,9 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
        <LinearLayout
+           android:id="@+id/root"
+           android:visibility="gone"
            android:layout_marginRight="10dp"
            android:layout_marginLeft="10dp"
            android:orientation="vertical"
@@ -64,6 +68,7 @@
                style="@style/text_body_style"/>
 
            <TextView
+               android:visibility="gone"
                android:text="@string/certification"
                style="@style/text_title_style"/>
 
@@ -79,13 +84,19 @@
                android:id="@+id/recyclerView"
                android:layout_marginTop="14dp"
                android:layout_width="match_parent"
-               android:layout_height="match_parent">
+               android:layout_height="wrap_content">
 
            </android.support.v7.widget.RecyclerView>
 
        </LinearLayout>
 
+        <com.lts.movie.widget.ThreePointLoadingView
+            android:id="@+id/tpl_view"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 
+    </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

@@ -2,6 +2,7 @@ package com.lts.movie.movie.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,7 @@ public class ReviewFragment extends BaseFragment<ReviewPresenter> implements Rev
     private int mMovieId;
     private RecyclerView mRecyclerView;
     private BaseRecyclerAdapter<Reviews.ResultsBean> mAdapter;
+    private SwipeRefreshLayout mSwipeRefresh;
 
     public static ReviewFragment newIntences(int movieId) {
         ReviewFragment fragment = new ReviewFragment();
@@ -51,12 +53,12 @@ public class ReviewFragment extends BaseFragment<ReviewPresenter> implements Rev
 
     @Override
     public void showProgress() {
-
+        mSwipeRefresh.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-
+        mSwipeRefresh.setRefreshing(false);
     }
 
     @Override
@@ -66,13 +68,59 @@ public class ReviewFragment extends BaseFragment<ReviewPresenter> implements Rev
 
     @Override
     public void initView(View view) {
+        mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
+        mSwipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefresh.setRefreshing(true);
+            }
+        });
+
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.reFreshData();
+            }
+        });
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mPresenter = new ReviewPresenterImpl(this, mMovieId,getResources().getString(R.string.language));
     }
 
     @Override
     public void showReviews(List<Reviews.ResultsBean> data, String msg, DataLoadType dataLoadType) {
-        initAdapter(data);
+        if (mAdapter == null) {
+            initAdapter(data);
+        }
+
+        mAdapter.showEmptyView(false, "");
+
+        switch (dataLoadType) {
+            case REQUEST_DATA_SUCCESS:
+                if (data == null || data.size() == 0) {
+                    mAdapter.showEmptyView(true,getResources().getString(R.string.not_comments));
+                    mAdapter.notifyDataSetChanged();
+                }
+                mAdapter.enableLoadMore(true);
+                mAdapter.setData(data);
+                break;
+            case REQUEST_DATA_FAIL:
+                mAdapter.enableLoadMore(false);
+                mAdapter.showEmptyView(true, msg);
+                mAdapter.notifyDataSetChanged();
+                break;
+            case REQUST_MORE_DATA_SUCCESS:
+                mAdapter.loadMoreSuccess();
+                if (data == null || data.size() == 1) {
+                    mAdapter.enableLoadMore(null);
+                    return;
+                }
+
+                mAdapter.addMoreData(data);
+                break;
+            case REQUST_MORE_FAIL:
+                mAdapter.loadMoreFailed(msg);
+                break;
+        }
     }
 
     private void initAdapter(final List<Reviews.ResultsBean> data) {

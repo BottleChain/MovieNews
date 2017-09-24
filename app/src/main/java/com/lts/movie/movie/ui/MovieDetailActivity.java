@@ -72,7 +72,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         mMovieId = getIntent().getIntExtra(Constant.movie_id, -1);
         initViewPag();
 
-        mPresenter = new MovieDeatilPresenterImpl(this, mMovieId,getResources().getString(R.string.language));
+        mPresenter = new MovieDeatilPresenterImpl(this, mMovieId);
     }
 
 

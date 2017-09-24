@@ -14,6 +14,8 @@ public final class Constant {
     public static final String LOCALE = "locale";
     public static final String VIDEO_NAME = "video_name";
     public static final String VIDEO_KEY = "video_key";
+    public static final String CAST_ID = "cast_id";
+    public static final String CAST = "cast";
 
     private Constant(){}
 

@@ -7,4 +7,8 @@
 
     <!--导航头像背景-->
     <attr name="navHeaderBackground" format="reference"/>
+
+    <declare-styleable name="ThreePointLoadingView">
+        <attr name="pointColor" format="color|reference"/>
+    </declare-styleable>
 </resources>

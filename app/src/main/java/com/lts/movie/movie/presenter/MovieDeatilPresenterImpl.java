@@ -19,14 +19,13 @@ public class MovieDeatilPresenterImpl extends BasePresenterImpl<MovieDeatilView,
     private int movieId;
     private boolean mIsInit;
     private MovieDetailMoudel<MovieDetail> mMoudel;
-    private String mLanguage;
 
-    public MovieDeatilPresenterImpl(MovieDeatilView view,int movieId,String language) {
+    public MovieDeatilPresenterImpl(MovieDeatilView view,int movieId) {
         super(view);
         this.mView = view;
         this.movieId = movieId;
         mMoudel = new MovieDetailMoudelImpl();
-        mSubscription = mMoudel.requestMovieDeatil(this,movieId, Constant.api_key,language, null);
+        mSubscription = mMoudel.requestMovieDeatil(this,movieId, Constant.api_key,Constant.LANGUGE, null);
     }
 
     @Override

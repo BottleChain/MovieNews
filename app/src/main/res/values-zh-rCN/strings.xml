@@ -49,6 +49,7 @@
     <string name="war">战争</string>
     <string name="western">欧洲</string>
     <string name="clear">Clear</string>
+    <string name="not_comments">Not comments</string>
 
     <string-array name="play_type">
         <item>评分最高</item>

@@ -1,7 +1,7 @@
 package com.lts.movie.movie.view;
 
 import com.lts.movie.base.BaseView;
-import com.lts.movie.bean.Cast;
+import com.lts.movie.bean.CastList;
 import com.lts.movie.constant.DataLoadType;
 
 import java.util.List;
@@ -14,5 +14,5 @@ import java.util.List;
 
 public interface CastView extends BaseView {
 
-    void showCast(List<Cast.CastBean> data,String msg, DataLoadType dataLoadType);
+    void showCast(List<CastList.CastBean> data, String msg, DataLoadType dataLoadType);
 }

@@ -9,4 +9,8 @@ import com.lts.movie.base.BasePresenter;
  */
 
 public interface ReviewPresenter extends BasePresenter {
+
+    void reFreshData();
+
+    void loadMoreData();
 }

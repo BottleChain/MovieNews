@@ -4,6 +4,8 @@ import android.util.SparseArray;
 
 import com.lts.movie.App;
 import com.lts.movie.bean.Cast;
+import com.lts.movie.bean.CastImage;
+import com.lts.movie.bean.CastList;
 import com.lts.movie.bean.MovieDetail;
 import com.lts.movie.bean.NowPlayMovie;
 import com.lts.movie.bean.Reviews;
@@ -196,7 +198,7 @@ public class RetrofitManager {
         return mApi.getMovieDetail(movieId, api_key, language, apped_to_response);
     }
 
-   public Observable<Cast> getCastForMovie(Integer movieId,String api_key) {
+   public Observable<CastList> getCastForMovie(Integer movieId, String api_key) {
        return mApi.getCastForMovie(movieId, api_key);
    }
 
@@ -210,6 +212,18 @@ public class RetrofitManager {
 
     public Observable<NowPlayMovie> queryMovie(String api_key, String language, String query) {
         return mApi.queryMovie(api_key, language, query);
+    }
+
+    public Observable<NowPlayMovie> similarMovies(int movie_id, String api_key, String language) {
+        return mApi.similarMovie(movie_id, api_key, language);
+    }
+
+    public Observable<Cast> getCastDetail(int person_id, String api_key, String language){
+        return mApi.requestCastDetail(person_id, api_key, language);
+    }
+
+    public Observable<CastImage> getCastImage(int person_id, String api_key) {
+        return mApi.requestCastImage(person_id, api_key);
     }
 
 }

@@ -63,6 +63,15 @@ public class MovieDetail {
     private List<ProductionCompaniesBean> production_companies;
     private List<ProductionCountriesBean> production_countries;
     private List<SpokenLanguagesBean> spoken_languages;
+    private NowPlayMovie similar;
+
+    public NowPlayMovie getSimilar() {
+        return similar;
+    }
+
+    public void setSimilar(NowPlayMovie similar) {
+        this.similar = similar;
+    }
 
     public String getGenresFormat() {
         StringBuilder stringBuilder = new StringBuilder();
