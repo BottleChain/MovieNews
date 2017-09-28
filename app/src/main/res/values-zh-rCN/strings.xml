@@ -50,6 +50,7 @@
     <string name="western">欧洲</string>
     <string name="clear">Clear</string>
     <string name="not_comments">Not comments</string>
+    <string name="share">Share</string>
 
     <string-array name="play_type">
         <item>评分最高</item>
@@ -67,5 +68,10 @@
         <item>概述</item>
         <item>演员</item>
         <item>评论</item>
+    </string-array>
+
+    <string-array name="cast_info_tab">
+        <item>bio</item>
+        <item>as actor</item>
     </string-array>
 </resources>

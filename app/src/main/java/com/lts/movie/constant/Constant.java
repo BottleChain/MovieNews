@@ -11,6 +11,8 @@ import com.lts.movie.R;
 
 public final class Constant {
 
+
+
     public static final String LOCALE = "locale";
     public static final String VIDEO_NAME = "video_name";
     public static final String VIDEO_KEY = "video_key";

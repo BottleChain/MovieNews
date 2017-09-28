@@ -7,6 +7,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +24,10 @@ import com.lts.movie.movie.presenter.MovieDetailPresenter;
 import com.lts.movie.movie.view.MovieDeatilView;
 import com.lts.movie.widget.AppBarStateChangeListener;
 import com.squareup.picasso.Picasso;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.List;
 
@@ -123,6 +129,58 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     @Override
     public void hideProgress() {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_share, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_share) {
+            shwoShare();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shwoShare() {
+        new ShareAction(this)
+                .withText("哈哈")
+                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.QQ,SHARE_MEDIA.SINA)
+                .setCallback(new UMShareListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+
+                    }
+
+                    @Override
+                    public void onResult(SHARE_MEDIA share_media) {
+
+                    }
+
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media) {
+
+                    }
+                }).open();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode,resultCode,data);
     }
 
     @Override
