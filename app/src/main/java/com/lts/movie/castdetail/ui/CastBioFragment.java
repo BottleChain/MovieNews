@@ -1,5 +1,6 @@
 package com.lts.movie.castdetail.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import com.lts.movie.base.BaseRecyclerAdapter;
 import com.lts.movie.base.BaseRecyclerViewHolder;
 import com.lts.movie.bean.Cast;
 import com.lts.movie.bean.CastImage;
+import com.lts.movie.callback.OnItemClickAdapter;
 import com.lts.movie.castdetail.presenter.CastImagePresenter;
 import com.lts.movie.castdetail.presenter.CastImagePresenterImpl;
 import com.lts.movie.castdetail.view.CastImageView;
@@ -21,6 +23,7 @@ import com.lts.movie.constant.DataLoadType;
 import com.lts.movie.widget.ThreePointLoadingView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +37,7 @@ public class CastBioFragment extends BaseFragment<CastImagePresenter>  implement
     private Cast mCast;
     private RecyclerView mRecyclerView;
     private ThreePointLoadingView mLoadingView;
+    private List<String> mImages;
 
     public static CastBioFragment newIntences(Cast cast) {
         CastBioFragment fragment = new CastBioFragment();
@@ -77,6 +81,12 @@ public class CastBioFragment extends BaseFragment<CastImagePresenter>  implement
 
     @Override
     public void showCastImage(List<CastImage.ProfilesBean> data, String msg, DataLoadType dataLoadType) {
+        mImages = new ArrayList<>();
+        mImages.clear();
+        for (CastImage.ProfilesBean profilesBean : data) {
+            mImages.add(Constant.image_base_url +"w780" + profilesBean.getFile_path());
+        }
+
         BaseRecyclerAdapter<CastImage.ProfilesBean > adapter = new BaseRecyclerAdapter<CastImage.ProfilesBean>(mActivity,data) {
             @Override
             public int getItemLayoutId(int viewType) {
@@ -88,6 +98,16 @@ public class CastBioFragment extends BaseFragment<CastImagePresenter>  implement
                 Picasso.with(mActivity).load(Constant.logUrl + item.getFile_path()).into(holder.getImageView(R.id.imageView));
             }
         };
+
+        adapter.setOnItemClickListener(new OnItemClickAdapter() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(mActivity, CastPhotoListActivity.class);
+                intent.putStringArrayListExtra(Constant.CAST_PHOTO_LIST, (ArrayList<String>) mImages);
+                intent.putExtra(Constant.POSITION, position);
+                startActivity(intent);
+            }
+        });
 
         LinearLayoutManager layout = new LinearLayoutManager(mActivity);
         layout.setOrientation(LinearLayoutManager.HORIZONTAL);

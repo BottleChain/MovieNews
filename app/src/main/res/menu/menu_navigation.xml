@@ -8,6 +8,7 @@
             android:title="@string/movie" />
 
         <item
+            android:visible="false"
             android:icon="@mipmap/ic_tv_black_24dp"
             android:id="@+id/action_tv"
             android:title="@string/TV"/>

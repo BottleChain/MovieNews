@@ -23,6 +23,7 @@ import com.lts.movie.constant.DataLoadType;
 import com.lts.movie.movie.presenter.CastPresenter;
 import com.lts.movie.movie.presenter.CastPresenterImpl;
 import com.lts.movie.movie.view.CastView;
+import com.lts.movie.util.PicassoUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -76,7 +77,18 @@ public class CastFragment extends BaseFragment<CastPresenter> implements CastVie
     public void initView(View view) {
         mRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                Picasso intences = PicassoUtil.Intences(mActivity);
 
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    intences.resumeTag("PhotoTag");
+                } else {
+                    intences.pauseTag("PhotoTag");
+                }
+            }
+        });
         mRefresh.post(new Runnable() {
             @Override
             public void run() {
@@ -109,7 +121,7 @@ public class CastFragment extends BaseFragment<CastPresenter> implements CastVie
             @Override
             public void bindData(BaseRecyclerViewHolder holder, int position, CastList.CastBean item) {
                 ImageView imageView = holder.getImageView(R.id.cast_photo);
-                Picasso.with(mActivity).load(Constant.logUrl + item.getProfile_path()).into(imageView);
+                PicassoUtil.Intences(mActivity).load(Constant.logUrl + item.getProfile_path()).tag("PhotoTag").into(imageView);
                 holder.getTextView(R.id.cast_character).setText(item.getCharacter());
                 holder.getTextView(R.id.cast_name).setText(item.getName());
             }

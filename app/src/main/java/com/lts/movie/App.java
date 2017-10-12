@@ -28,6 +28,8 @@ public class App extends Application {
 
     {
         PlatformConfig.setSinaWeibo("2444532708", "88700b6a5e404ba5a112d2d10426adab", "https://developers.themoviedb.org/3");
+        PlatformConfig.setWeixin("wxb9e86f1ca7125331", "dc14a0ff65e4601ce10338f3bb195cee");
+        PlatformConfig.setQQZone("1106380059","zyufAV2LHaMgVSAM");
     }
 
     @Override

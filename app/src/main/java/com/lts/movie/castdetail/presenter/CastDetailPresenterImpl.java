@@ -26,7 +26,7 @@ public class CastDetailPresenterImpl extends BasePresenterImpl<CastDetailView,Ca
         this.mView = view;
         this.person_id = person_id;
         mMoudel = new CastDetailMoudelImpl();
-        mSubscription = mMoudel.requestCastDetail(this, person_id, Constant.api_key, Constant.LANGUGE);
+        mSubscription = mMoudel.requestCastDetail(this, person_id, Constant.api_key, "en-US");
     }
 
     @Override

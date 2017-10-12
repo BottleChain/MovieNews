@@ -18,6 +18,9 @@ public final class Constant {
     public static final String VIDEO_KEY = "video_key";
     public static final String CAST_ID = "cast_id";
     public static final String CAST = "cast";
+    public static final String CAST_PHOTO_LIST = "cast_photo_list";
+    public static final String POSITION = "position";
+    public static final String PHOTO_PAHT = "photo_path";
 
     private Constant(){}
 
