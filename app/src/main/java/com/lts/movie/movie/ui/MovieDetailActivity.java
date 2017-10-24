@@ -90,7 +90,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         mToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.material_white));
         mMovieId = getIntent().getIntExtra(Constant.movie_id, -1);
         initViewPag();
-
         mPresenter = new MovieDeatilPresenterImpl(this, mMovieId);
     }
 
@@ -180,7 +179,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         mImage = new UMImage(this, Constant.logUrl + movieDetail.getPoster_path());
         mTitle = movieDetail.getTitle();
 
-        mWeb = new UMWeb("https://www.themoviedb.org/movie/" + movieDetail.getId() + "-" + movieDetail.getTitle());
+        mWeb = new UMWeb("http://www.imdb.com/title/" + movieDetail.getImdb_id());
         mWeb.setTitle(movieDetail.getTitle());
         mWeb.setThumb(mImage);
         mWeb.setDescription(movieDetail.getOverview());

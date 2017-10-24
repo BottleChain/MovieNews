@@ -154,7 +154,7 @@ public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> im
                 Intent intent = new Intent(mActivity, MovieDetailActivity.class);
                 intent.putExtra(Constant.movie_id, resultsBean.getId());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.movie_logo), "logo");
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.movie_logo), "similar");
 
                     mActivity.startActivity(intent, options.toBundle());
                 } else {

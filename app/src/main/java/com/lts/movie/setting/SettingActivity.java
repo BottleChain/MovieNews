@@ -70,7 +70,8 @@ public class SettingActivity extends BaseActivity {
     private void aboutPreject() {
 
         MaterialDialog dialog = new MaterialDialog.Builder(this).title("说明").titleGravity(GravityEnum.CENTER).content("").show();
-        dialog.getContentView().setText(Html.fromHtml("&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;此练习项目API来源于:"+"<a href='https://developers.themoviedb.org/3'>The Movie Database API 3</a><br>"
+        dialog.getContentView().setText(Html.fromHtml("&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;此练习项目API来源于:"
+                +"<a href='https://developers.themoviedb.org/3'>The Movie Database API 3</a><br>"
                 + "&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;使用了诸如:<br>"
                 + "<a href='https://github.com/square/retrofit'>Retrofit2.0</a>,"
                 + "<a href='https://github.com/ReactiveX/RxJava'>RxJava</a>,"
@@ -127,4 +128,5 @@ public class SettingActivity extends BaseActivity {
                 .create()
                 .show();
     }
+
 }

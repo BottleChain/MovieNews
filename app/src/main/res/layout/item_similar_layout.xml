@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/movie_logo"
-            android:transitionName="logo"
+            android:transitionName="similar"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="140dp"/>
