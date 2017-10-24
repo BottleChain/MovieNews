@@ -3,6 +3,8 @@
 
 暂时就这样,以后有空再慢慢完善
 
+<a href='https://play.google.com/store/apps/details?id=com.lts.movie'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height=90px/></a>
+
 # 项目运行截图 #
 
 ![](https://i.imgur.com/t2WOWT7.png)
