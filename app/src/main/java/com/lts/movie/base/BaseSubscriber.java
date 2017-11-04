@@ -47,8 +47,17 @@ public class BaseSubscriber<T> extends Subscriber<T> {
 
             if (e instanceof HttpException) {
                 switch (((HttpException) e).code()) {
+                    case 401:
+                        errorMsg = "Authentication failed: You do not have permissions to access the service.";
+                        break;
                     case 403:
-                        errorMsg = "没有权限访问此链接!!";
+                        errorMsg = "Duplicate entry: The data you tried to submit already exists.";
+                        break;
+                    case 404:
+                        errorMsg = "Invalid id: The pre-requisite id is invalid or not found.";
+                        break;
+                    case 503:
+                        errorMsg = "Service offline: This service is temporarily offline, try again later.";
                         break;
                     case 504:
                         if (NetUtil.isConnected(App.getContext())) {

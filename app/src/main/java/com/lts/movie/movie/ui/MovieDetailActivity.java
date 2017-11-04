@@ -1,6 +1,7 @@
 package com.lts.movie.movie.ui;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -13,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -78,7 +81,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     @Override
     public void initView() {
         initActionBoutton();
-
         mMovieBackgound = (ImageView) findViewById(R.id.movie_background_photo);
         mMovieLogo = (ImageView) findViewById(R.id.movie_logo);
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -90,6 +92,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         mToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.material_white));
         mMovieId = getIntent().getIntExtra(Constant.movie_id, -1);
         initViewPag();
+
         mPresenter = new MovieDeatilPresenterImpl(this, mMovieId);
     }
 
@@ -168,7 +171,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
     @Override
     public void showMovieDetail(MovieDetail movieDetail) {
-
+        startCircularReveal();
         PicassoUtil.Intences(this).load(Constant.logUrl + movieDetail.getPoster_path()).into(mMovieLogo);
         PicassoUtil.Intences(this).load(Constant.backgoundUrl + movieDetail.getBackdrop_path()).resize(mMovieBackgound.getWidth()/2,mMovieBackgound.getHeight()/2).into(mMovieBackgound);
         mToolbarLayout.setTitle(movieDetail.getTitle());
@@ -184,6 +187,15 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         mWeb.setThumb(mImage);
         mWeb.setDescription(movieDetail.getOverview());
 
+    }
+
+    private void startCircularReveal() {
+        float finalRadius = (float) Math.hypot(mMovieBackgound.getWidth(), mMovieBackgound.getHeight());
+
+        Animator circularReveal = ViewAnimationUtils.createCircularReveal(mMovieBackgound, mMovieBackgound.getWidth() / 2, mMovieBackgound.getHeight(), 0, finalRadius);
+        circularReveal.setDuration(800);
+        circularReveal.setInterpolator(new AccelerateDecelerateInterpolator());
+        circularReveal.start();
     }
 
     private String getMovieType(List<MovieDetail.GenresBean> genres) {

@@ -1,5 +1,5 @@
 # MovieNews
-电影资讯的app,使用IMDB开源数据库,API地址[https://www.themoviedb.org/documentation/api](https://www.themoviedb.org/documentation/api)
+此项目是我用来练习mvp跟rxjava的使用,项目虽小但五脏俱全; 有基类抽取,自定义控件,第三方库的二次封装,混淆配置,友盟多渠道打包,统计,社会化分享等;具体请参考源码,API来源于TMDB[https://www.themoviedb.org/documentation/api](https://www.themoviedb.org/documentation/api)
 
 暂时就这样,以后有空再慢慢完善
 
@@ -7,10 +7,12 @@
 
 # 项目运行截图 #
 
-![](https://i.imgur.com/t2WOWT7.png)
+![](https://i.imgur.com/t2WOWT7.png) | ![](https://i.imgur.com/QO0pVXa.png)
 
+# 源码介绍 #
+包结构目录,按功能模块划分;
 
-![](https://i.imgur.com/QO0pVXa.png)
+![](https://i.imgur.com/30zRNVg.png) 
 
 
 # 使用到的第三方库 #

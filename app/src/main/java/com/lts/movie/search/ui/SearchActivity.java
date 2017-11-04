@@ -68,8 +68,11 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_clear) {
             mEditText.setText("");
-            mAdapter.getData().clear();
-            mAdapter.notifyDataSetChanged();
+            if (mAdapter.getData() != null) {
+                mAdapter.getData().clear();
+                mAdapter.notifyDataSetChanged();
+
+            }
             return true;
         }
 
