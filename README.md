@@ -3,6 +3,8 @@
 
 暂时就这样,以后有空再慢慢完善
 
+<a href='https://play.google.com/store/apps/details?id=com.lts.movie'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height=90px/></a>
+
 # 项目运行截图 #
 
 ![](https://i.imgur.com/t2WOWT7.png)
@@ -11,7 +13,7 @@
 ![](https://i.imgur.com/QO0pVXa.png)
 
 
-#使用到的第三方库#
+# 使用到的第三方库 #
 
 Retrofit [https://github.com/square/retrofit](https://github.com/square/retrofit)
 
@@ -20,6 +22,9 @@ Picasso [https://github.com/square/picasso](https://github.com/square/picasso)
 一个非常方便的日志打印工具  [https://github.com/ZhaoKaiQiang/KLog](https://github.com/ZhaoKaiQiang/KLog)
 
 感谢 [https://gank.io/post/560e15be2dca930e00da1083](https://gank.io/post/560e15be2dca930e00da1083)
+
+# License #
+
 
 MIT License
 

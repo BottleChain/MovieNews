@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,8 +24,8 @@ import com.lts.movie.constant.Genres;
 import com.lts.movie.movie.presenter.MovieDeatilPresenterImpl;
 import com.lts.movie.movie.presenter.MovieDetailPresenter;
 import com.lts.movie.movie.view.MovieDeatilView;
+import com.lts.movie.util.PicassoUtil;
 import com.lts.movie.widget.ThreePointLoadingView;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -94,6 +95,7 @@ public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> im
 
     @Override
     public void initView(View rootView) {
+        NestedScrollView scrollView = (NestedScrollView) rootView.findViewById(R.id.scrollView);
         mPointLoadingView = (ThreePointLoadingView) rootView.findViewById(R.id.tpl_view);
         mLinearLayout = (LinearLayout) rootView.findViewById(R.id.root);
         mTvSynopsis = (TextView) rootView.findViewById(R.id.tv_synopsis);
@@ -103,6 +105,13 @@ public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> im
         mTvReleaseDate = (TextView) rootView.findViewById(R.id.tv_release_date);
         mTvRevenue = (TextView) rootView.findViewById(R.id.tv_revenue);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+            }
+        });
         mPresenter = new MovieDeatilPresenterImpl(this, mMovieId);
     }
 
@@ -115,6 +124,7 @@ public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> im
         mTvReleaseDate.setText(movieDetail.getRelease_date());
         mTvRevenue.setText(movieDetail.getRevenues());
         showSimilar(movieDetail.getSimilar().getResults());
+
     }
 
     private void showSimilar(List<NowPlayMovie.ResultsBean> results) {
@@ -131,7 +141,7 @@ public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> im
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, int position, NowPlayMovie.ResultsBean item) {
-                Picasso.with(mActivity).load(Constant.logUrl + item.getPoster_path()).into(holder.getImageView(R.id.movie_logo));
+                PicassoUtil.Intences(mActivity).load(Constant.logUrl + item.getPoster_path()).into(holder.getImageView(R.id.movie_logo));
                 holder.getTextView(R.id.movie_name).setText(item.getTitle());
                 holder.getTextView(R.id.movie_type).setText(Genres.getName(item.getGenre_ids()));
             }
@@ -144,7 +154,7 @@ public class MovieOverViewFragment extends BaseFragment<MovieDetailPresenter> im
                 Intent intent = new Intent(mActivity, MovieDetailActivity.class);
                 intent.putExtra(Constant.movie_id, resultsBean.getId());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.movie_logo), "logo");
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.movie_logo), "similar");
 
                     mActivity.startActivity(intent, options.toBundle());
                 } else {

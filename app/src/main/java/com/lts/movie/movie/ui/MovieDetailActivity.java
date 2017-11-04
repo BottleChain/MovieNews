@@ -1,12 +1,17 @@
 package com.lts.movie.movie.ui;
 
+import android.Manifest;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,17 +25,29 @@ import com.lts.movie.movie.MovieFragmentAdapter;
 import com.lts.movie.movie.presenter.MovieDeatilPresenterImpl;
 import com.lts.movie.movie.presenter.MovieDetailPresenter;
 import com.lts.movie.movie.view.MovieDeatilView;
+import com.lts.movie.util.PicassoUtil;
 import com.lts.movie.widget.AppBarStateChangeListener;
-import com.squareup.picasso.Picasso;
+import com.socks.library.KLog;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import java.util.List;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.RuntimePermissions;
+
 /**
  * Created by lts on 2017/9/3.
- * Fuction:
+ * Fuction:影片详情页面
  * Update:
  */
 
+@RuntimePermissions
 public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> implements MovieDeatilView {
 
 
@@ -44,6 +61,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     private TextView mMovieType;
     private String mTitle;
     private int mMovieId;
+    private UMImage mImage;
+    private UMWeb mWeb;
 
     @Override
     public int bindingView() {
@@ -71,7 +90,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         mToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.material_white));
         mMovieId = getIntent().getIntExtra(Constant.movie_id, -1);
         initViewPag();
-
         mPresenter = new MovieDeatilPresenterImpl(this, mMovieId);
     }
 
@@ -126,13 +144,46 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_share, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_share) {
+            MovieDetailActivityPermissionsDispatcher.showShareWithCheck(this);
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode,resultCode,data);
+    }
+
+    @Override
     public void showMovieDetail(MovieDetail movieDetail) {
-        mTitle = movieDetail.getTitle();
-        Picasso.with(this).load(Constant.logUrl + movieDetail.getPoster_path()).into(mMovieLogo);
-        Picasso.with(this).load(Constant.backgoundUrl + movieDetail.getBackdrop_path()).resize(mMovieBackgound.getWidth()/2,mMovieBackgound.getHeight()/2).into(mMovieBackgound);
+
+        PicassoUtil.Intences(this).load(Constant.logUrl + movieDetail.getPoster_path()).into(mMovieLogo);
+        PicassoUtil.Intences(this).load(Constant.backgoundUrl + movieDetail.getBackdrop_path()).resize(mMovieBackgound.getWidth()/2,mMovieBackgound.getHeight()/2).into(mMovieBackgound);
         mToolbarLayout.setTitle(movieDetail.getTitle());
         mMovieName.setText(movieDetail.getTitle());
         mMovieType.setText(getMovieType(movieDetail.getGenres()));
+
+        //友盟分享的信息
+        mImage = new UMImage(this, Constant.logUrl + movieDetail.getPoster_path());
+        mTitle = movieDetail.getTitle();
+
+        mWeb = new UMWeb("http://www.imdb.com/title/" + movieDetail.getImdb_id());
+        mWeb.setTitle(movieDetail.getTitle());
+        mWeb.setThumb(mImage);
+        mWeb.setDescription(movieDetail.getOverview());
+
     }
 
     private String getMovieType(List<MovieDetail.GenresBean> genres) {
@@ -146,5 +197,54 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         }
 
         return sb.toString();
+    }
+
+    @NeedsPermission(value = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, maxSdkVersion = 25)
+    void showShare() {
+
+        new ShareAction(this)
+                .withMedia(mWeb)
+                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ,SHARE_MEDIA.SINA,SHARE_MEDIA.QZONE)
+                .setCallback(shareListener)
+                .open();
+    }
+
+    private UMShareListener shareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+            KLog.d("onstart");
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA share_media) {
+            KLog.d("onresult");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+            KLog.d(throwable.getMessage());
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media) {
+            KLog.d("oncancel");
+        }
+    };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MovieDetailActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void premissionDenied() {
+       Snackbar.make(mViewPager,"获取权限失败,请手动开启",Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
     }
 }

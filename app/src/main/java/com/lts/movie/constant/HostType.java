@@ -8,7 +8,8 @@ package com.lts.movie.constant;
 
 public enum HostType {
 
-    MOVIE_HOST(1,Constant.HOST_URL);
+    MOVIE_HOST(1,Constant.HOST_URL),
+    IMDB_HOST(2,"https://theimdbapi.org/api/");
 
     private String mUrl;
     private int index;

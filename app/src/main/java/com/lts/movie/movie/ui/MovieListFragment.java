@@ -26,6 +26,7 @@ import com.lts.movie.constant.MovieListType;
 import com.lts.movie.movie.presenter.MovieListPresenter;
 import com.lts.movie.movie.presenter.MovieListPresenterImpl;
 import com.lts.movie.movie.view.MovieListView;
+import com.lts.movie.util.PicassoUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -73,6 +74,21 @@ public class MovieListFragment extends BaseFragment<MovieListPresenter> implemen
             @Override
             public void onRefresh() {
                 mPresenter.reFreshData();
+            }
+        });
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                Picasso picasso = PicassoUtil.Intences(mActivity);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    picasso.resumeTag("PhotoTag");
+                } else {
+                    picasso.pauseTag("PhotoTag");
+                }
+
+
+
             }
         });
         mPresenter = new MovieListPresenterImpl(this,mMovie_list_type,getResources().getString(R.string.language));
@@ -135,7 +151,7 @@ public class MovieListFragment extends BaseFragment<MovieListPresenter> implemen
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, int position, NowPlayMovie.ResultsBean item) {
-                Picasso.with(mActivity).load(Constant.logUrl+item.getPoster_path()).into(holder.getImageView(R.id.movieLogo));
+                PicassoUtil.Intences(mActivity).load(Constant.logUrl+item.getPoster_path()).tag("PhotoTag").into(holder.getImageView(R.id.movieLogo));
                 holder.getTextView(R.id.movieTitle).setText(item.getTitle());
                 holder.getTextView(R.id.movieOverView).setText(Genres.getName(item.getGenre_ids()));
                 holder.getTextView(R.id.movie_release).setText(item.getRelease_date());

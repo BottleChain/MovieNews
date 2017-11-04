@@ -50,6 +50,7 @@
     <string name="western">Western</string>
     <string name="clear">Clear</string>
     <string name="not_comments">Not comments</string>
+    <string name="share">Share</string>
 
     <string-array name="play_type">
         <item>TopRated</item>
@@ -67,5 +68,10 @@
         <item>OverView</item>
         <item>Cast</item>
         <item>Review</item>
+    </string-array>
+
+    <string-array name="cast_info_tab">
+        <item>bio</item>
+        <item>as actor</item>
     </string-array>
 </resources>

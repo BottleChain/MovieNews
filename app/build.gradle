@@ -11,7 +11,7 @@ android {
         }
     }
     compileSdkVersion 25
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.lts.movie"
         minSdkVersion 16
@@ -30,7 +30,7 @@ android {
 
         debug{
             applicationIdSuffix ".debug"
-            //signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
         }
     }
 
@@ -53,13 +53,31 @@ android {
         }
     }
 
+    productFlavors {
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+        _360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_360"]
+        }
+        baidu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+        }
+        wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+        qq {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "qq"]
+        }
+    }
+
 }
 
 dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile files('libs/YouTubeAndroidPlayerApi.jar')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     //支持库
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
@@ -73,6 +91,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'me.relex:circleindicator:1.2.2@aar'
     //日志打印工具
     compile 'com.github.zhaokaiqiang.klog:library:1.5.0'
     testCompile 'junit:junit:4.12'
@@ -82,8 +101,14 @@ dependencies {
     compile('com.afollestad.material-dialogs:core:0.9.0.1') {
         transitive = true
     }
-
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    //友盟统计
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    //权限管理
+    compile('com.github.hotchemi:permissionsdispatcher:2.4.0') { exclude module: 'support-v13' }
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
+    compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
 }
 
 greendao {

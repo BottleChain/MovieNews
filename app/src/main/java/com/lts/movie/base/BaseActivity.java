@@ -21,6 +21,7 @@ import com.lts.movie.R;
 import com.lts.movie.movie.ui.MainActivity;
 import com.lts.movie.setting.SettingActivity;
 import com.lts.movie.tv.TVActivity;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by lts on 2017/8/28.
@@ -160,8 +161,17 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     public void onClick(View v) {

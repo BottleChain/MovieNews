@@ -11,6 +11,8 @@ import com.lts.movie.db.DaoMaster;
 import com.lts.movie.db.DaoSession;
 import com.lts.movie.util.SpUtils;
 import com.socks.library.KLog;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import java.util.Locale;
 
@@ -24,6 +26,12 @@ public class App extends Application {
     private static Context mContext;
     private DaoSession mDaoSession;
 
+    {
+        PlatformConfig.setSinaWeibo("2444532708", "88700b6a5e404ba5a112d2d10426adab", "https://developers.themoviedb.org/3");
+        PlatformConfig.setWeixin("wxb9e86f1ca7125331", "dc14a0ff65e4601ce10338f3bb195cee");
+        PlatformConfig.setQQZone("1106380059","zyufAV2LHaMgVSAM");
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,6 +39,7 @@ public class App extends Application {
         KLog.init(BuildConfig.DEBUG);
         mContext = this;
         initGreenDao();
+        UMShareAPI.get(this);
     }
 
     private void initGreenDao() {
