@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,6 +24,7 @@ import com.lts.movie.movie.presenter.MovieDeatilPresenterImpl;
 import com.lts.movie.movie.presenter.MovieDetailPresenter;
 import com.lts.movie.movie.view.MovieDeatilView;
 import com.lts.movie.util.PicassoUtil;
+import com.lts.movie.widget.NestedScrollView;
 import com.lts.movie.widget.ThreePointLoadingView;
 
 import java.util.List;

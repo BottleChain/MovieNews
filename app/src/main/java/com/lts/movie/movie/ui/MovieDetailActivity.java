@@ -3,7 +3,9 @@ package com.lts.movie.movie.ui;
 import android.Manifest;
 import android.animation.Animator;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -90,6 +92,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, android.R.color.transparent));
         mToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.material_white));
+
         mMovieId = getIntent().getIntExtra(Constant.movie_id, -1);
         initViewPag();
 
@@ -169,8 +172,10 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         UMShareAPI.get(this).onActivityResult(requestCode,resultCode,data);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void showMovieDetail(MovieDetail movieDetail) {
+
         startCircularReveal();
         PicassoUtil.Intences(this).load(Constant.logUrl + movieDetail.getPoster_path()).into(mMovieLogo);
         PicassoUtil.Intences(this).load(Constant.backgoundUrl + movieDetail.getBackdrop_path()).resize(mMovieBackgound.getWidth()/2,mMovieBackgound.getHeight()/2).into(mMovieBackgound);
@@ -188,14 +193,17 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         mWeb.setDescription(movieDetail.getOverview());
 
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void startCircularReveal() {
         float finalRadius = (float) Math.hypot(mMovieBackgound.getWidth(), mMovieBackgound.getHeight());
-
         Animator circularReveal = ViewAnimationUtils.createCircularReveal(mMovieBackgound, mMovieBackgound.getWidth() / 2, mMovieBackgound.getHeight(), 0, finalRadius);
         circularReveal.setDuration(800);
         circularReveal.setInterpolator(new AccelerateDecelerateInterpolator());
         circularReveal.start();
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//
+//        }
     }
 
     private String getMovieType(List<MovieDetail.GenresBean> genres) {
@@ -209,16 +217,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         }
 
         return sb.toString();
-    }
-
-    @NeedsPermission(value = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, maxSdkVersion = 25)
-    void showShare() {
-
-        new ShareAction(this)
-                .withMedia(mWeb)
-                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ,SHARE_MEDIA.SINA,SHARE_MEDIA.QZONE)
-                .setCallback(shareListener)
-                .open();
     }
 
     private UMShareListener shareListener = new UMShareListener() {
@@ -243,6 +241,22 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         }
     };
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
+    }
+
+    @NeedsPermission(value = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void showShare() {
+        new ShareAction(this)
+                        .withMedia(mWeb)
+                        .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ,SHARE_MEDIA.SINA,SHARE_MEDIA.QZONE)
+                        .setCallback(shareListener)
+                        .open();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -250,13 +264,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     }
 
     @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    void premissionDenied() {
-       Snackbar.make(mViewPager,"获取权限失败,请手动开启",Snackbar.LENGTH_LONG).show();
-    }
+    void getPermissionDenied() {
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        UMShareAPI.get(this).release();
+        Snackbar.make(mViewPager,"获取权限失败,请手动开启",Snackbar.LENGTH_LONG).show();
     }
 }

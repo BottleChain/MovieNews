@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PointF;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -208,7 +207,7 @@ public class ThreePointLoadingView extends View {
     }
 
     public void stop() {
-        setVisibility(INVISIBLE);
+        setVisibility(GONE);
         stopLoading(false);
         postInvalidate();
     }
@@ -322,7 +321,7 @@ public class ThreePointLoadingView extends View {
     // 测量尺寸
     private int measureSize(int measureSpec, int defaultSize) {
 
-        Path path = new Path();
+//        Path path = new Path();
 
         final int mode = MeasureSpec.getMode(measureSpec);
         final int size = MeasureSpec.getSize(measureSpec);
